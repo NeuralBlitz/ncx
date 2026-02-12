@@ -58,7 +58,7 @@ class BenchmarkMetrics:
             json.dump(self.get_summary(), f, indent=2)
 
 def quantum_neuron_benchmark():
-    """Test quantum spiking neuron performance"""
+    """Test quantum spiking neuron performance""
     print("Running quantum neuron benchmark...")
     
     try:
@@ -78,8 +78,8 @@ def quantum_neuron_benchmark():
             quantum_tunneling=0.1,
             coherence_time=100.0,
             dt=0.1,
-            max_history=10000
-            numerical_tolerance=1e-10
+            max_history=10000,
+            numerical_tolerance=1e-10,
             integration_step='matrix_exponential'
         )
         
@@ -115,7 +115,7 @@ def quantum_neuron_benchmark():
         return 0
 
 def multi_reality_network_benchmark():
-    """Test multi-reality neural network performance"""
+    """Test multi-reality neural network performance""
     print("Running multi-reality network benchmark...")
     
     try:
@@ -137,8 +137,8 @@ def multi_reality_network_benchmark():
             
             network = MultiRealityNeuralNetwork(
                 num_realities=num_realities,
-                nodes_per_reality=nodes_per_reality
-                connection_probability=0.3,
+                nodes_per_reality=nodes_per_reality,
+            connection_probability=0.3,
                 evolution_cycles=20
             )
             
@@ -173,7 +173,7 @@ def multi_reality_network_benchmark():
         return {}
 
 def container_connectivity_test():
-    """Test Docker container connectivity"""
+    """Test Docker container connectivity""
     print("Running container connectivity test...")
     
     try:
@@ -212,7 +212,7 @@ def container_connectivity_test():
         return {}
 
 def main():
-    """Main benchmark execution"""
+    """Main benchmark execution""
     metrics = BenchmarkMetrics()
     
     print("🚀 NeuralBlitz v50 - Comprehensive Environment Validation")
@@ -255,7 +255,7 @@ def main():
     print("\n📡 MULTI-REALITY PERFORMANCE:")
     for config, result in mrnn_results.items():
         cycles_per_sec = result['cycles_per_sec']
-        status = "✅ EXCELLENT" if cycles_per_sec >= 2710 else "✅ GOOD" if cycles_per_sec >= 1355 else "⚠️ BELOW TARGET"
+        status = "✅ EXCELLENT" if cycles_per_sec >= 2710 else "✅ GOOD" if cycles_per_sec >= 1355 else "⚠️ BELOW TARGET
         print(f"  {config[0]}x{config[1]}: {cycles_per_sec:.1f} cycles/sec {status}")
     
     print("\n🌐 CONNECTIVITY TEST:")

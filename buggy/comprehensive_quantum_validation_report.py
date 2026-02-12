@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""
+""
 Comprehensive Quantum Validation Script for NeuralBlitz v50
 Validates all quantum components including spiking neurons, Schrödinger integration, 
 quantum error correction, multi-reality networks, quantum cryptography, and quantum optimization.
-"""
+""
 
 import numpy as np
 import time
@@ -20,7 +20,7 @@ print('COMPREHENSIVE QUANTUM VALIDATION')
 print('='*60)
 
 def run_quantum_validation():
-    """Run complete validation suite for all quantum components."""
+    """Run complete validation suite for all quantum components.""
     results = {}
     
     # Initialize results dictionary
@@ -85,7 +85,7 @@ def run_quantum_validation():
         else:
             # Taylor series approximation
             def simple_matrix_exp(A, n_terms=10):
-                """Simple Taylor series approximation of matrix exponential."""
+                """Simple Taylor series approximation of matrix exponential.""
                 result = np.eye(2, dtype=np.complex128)
                 term = np.eye(2, dtype=np.complex128)
                 for i in range(n_terms):
@@ -173,7 +173,7 @@ def run_quantum_validation():
         problem = OptimizationProblem(
             cost_matrix=cost_matrix,
             constraints=[],
-            objective="minimize_quantum_cost"
+            objective="minimize_quantum_cost
         )
         
         for i in range(10):
@@ -493,4 +493,3 @@ def run_quantum_validation():
 
 if __name__ == '__main__':
     run_quantum_validation()
-"

@@ -7,6 +7,7 @@ Revises: 004
 Create Date: 2026-02-09 12:45:00.000000
 
 """
+
 from typing import Sequence, Union
 from datetime import datetime, timedelta
 import hashlib
@@ -17,8 +18,8 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision: str = '005'
-down_revision: str = '004'
+revision: str = "005"
+down_revision: str = "004"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -35,7 +36,7 @@ def generate_api_key() -> str:
 
 def upgrade() -> None:
     """Upgrade schema - Insert seed data."""
-    
+
     # Insert admin user
     admin_id = uuid.uuid4()
     op.execute(f"""
@@ -44,7 +45,7 @@ def upgrade() -> None:
             '{admin_id}',
             'admin@neuralblitz.ai',
             'admin',
-            '{hash_password('admin_secure_pass_2026')}',
+            '{hash_password("admin_secure_pass_2026")}',
             'System Administrator',
             'ADMIN',
             true,
@@ -52,7 +53,7 @@ def upgrade() -> None:
             '{hash_password(generate_api_key())}'
         );
     """)
-    
+
     # Insert demo user
     demo_id = uuid.uuid4()
     op.execute(f"""
@@ -61,7 +62,7 @@ def upgrade() -> None:
             '{demo_id}',
             'demo@neuralblitz.ai',
             'demo',
-            '{hash_password('demo_secure_pass_2026')}',
+            '{hash_password("demo_secure_pass_2026")}',
             'Demo User',
             'USER',
             true,
@@ -69,7 +70,7 @@ def upgrade() -> None:
             '{hash_password(generate_api_key())}'
         );
     """)
-    
+
     # Insert partner user
     partner_id = uuid.uuid4()
     op.execute(f"""
@@ -78,7 +79,7 @@ def upgrade() -> None:
             '{partner_id}',
             'partner@neuralblitz.ai',
             'partner',
-            '{hash_password('partner_secure_pass_2026')}',
+            '{hash_password("partner_secure_pass_2026")}',
             'Integration Partner',
             'PARTNER',
             true,
@@ -86,16 +87,37 @@ def upgrade() -> None:
             '{hash_password(generate_api_key())}'
         );
     """)
-    
+
     # Insert demo quantum neurons
     neurons = [
-        ("Default Spiking Neuron", "Standard quantum spiking neuron for general processing", 20.0, 1.0, 0.1, "COHERENT"),
-        ("High-Current Neuron", "Neuron optimized for high-input scenarios", 50.0, 1.5, 0.05, "COHERENT"),
-        ("Fast Decay Neuron", "Neuron with rapid membrane potential decay", 20.0, 0.5, 0.2, "SUPERPOSITION"),
+        (
+            "Default Spiking Neuron",
+            "Standard quantum spiking neuron for general processing",
+            20.0,
+            1.0,
+            0.1,
+            "COHERENT",
+        ),
+        (
+            "High-Current Neuron",
+            "Neuron optimized for high-input scenarios",
+            50.0,
+            1.5,
+            0.05,
+            "COHERENT",
+        ),
+        (
+            "Fast Decay Neuron",
+            "Neuron with rapid membrane potential decay",
+            20.0,
+            0.5,
+            0.2,
+            "SUPERPOSITION",
+        ),
         ("Entangled Pair Alpha", "Part of entangled neuron pair", 30.0, 1.0, 0.1, "ENTANGLED"),
         ("Entangled Pair Beta", "Part of entangled neuron pair", 30.0, 1.0, 0.1, "ENTANGLED"),
     ]
-    
+
     neuron_ids = []
     for name, desc, current, threshold, decay, state in neurons:
         neuron_id = uuid.uuid4()
@@ -113,7 +135,7 @@ def upgrade() -> None:
                 '{{"demo": true, "version": "1.0"}}'::jsonb
             );
         """)
-    
+
     # Create entanglement between pair
     if len(neuron_ids) >= 5:
         op.execute(f"""
@@ -125,7 +147,7 @@ def upgrade() -> None:
                 0.92
             );
         """)
-    
+
     # Insert demo reality network
     network_id = uuid.uuid4()
     op.execute(f"""
@@ -145,7 +167,7 @@ def upgrade() -> None:
             '{{"demo": true, "auto_evolve": false}}'::jsonb
         );
     """)
-    
+
     # Insert reality instances
     for i in range(4):
         reality_id = uuid.uuid4()
@@ -165,10 +187,10 @@ def upgrade() -> None:
                 50,
                 0.1,
                 'ACTIVE',
-                '{{"dimension": {i}, "energy": {100 + i * 10}}}'}::jsonb
+                f'{{"dimension": {i}, "energy": {100 + i * 10}}}'::jsonb
             );
         """)
-    
+
     # Log migration completion
     op.execute(f"""
         INSERT INTO migration_history (revision_id, revision_name, operation, success, executed_by)
@@ -178,16 +200,32 @@ def upgrade() -> None:
 
 def downgrade() -> None:
     """Downgrade schema - Remove seed data."""
-    
+
     # Delete seed data (in reverse order of creation)
-    op.execute("DELETE FROM consciousness_events WHERE network_id IN (SELECT id FROM reality_networks WHERE configuration->>'demo' = 'true');")
-    op.execute("DELETE FROM consciousness_snapshots WHERE network_id IN (SELECT id FROM reality_networks WHERE configuration->>'demo' = 'true');")
-    op.execute("DELETE FROM reality_nodes WHERE reality_id IN (SELECT id FROM reality_instances WHERE metadata->>'demo' = 'true');")
+    op.execute(
+        "DELETE FROM consciousness_events WHERE network_id IN (SELECT id FROM reality_networks WHERE configuration->>'demo' = 'true');"
+    )
+    op.execute(
+        "DELETE FROM consciousness_snapshots WHERE network_id IN (SELECT id FROM reality_networks WHERE configuration->>'demo' = 'true');"
+    )
+    op.execute(
+        "DELETE FROM reality_nodes WHERE reality_id IN (SELECT id FROM reality_instances WHERE metadata->>'demo' = 'true');"
+    )
     op.execute("DELETE FROM reality_instances WHERE metadata->>'demo' = 'true';")
     op.execute("DELETE FROM reality_networks WHERE configuration->>'demo' = 'true';")
-    op.execute("DELETE FROM quantum_entanglements WHERE source_neuron_id IN (SELECT id FROM quantum_neurons WHERE parameters->>'demo' = 'true');")
-    op.execute("DELETE FROM quantum_processes WHERE neuron_id IN (SELECT id FROM quantum_neurons WHERE parameters->>'demo' = 'true');")
+    op.execute(
+        "DELETE FROM quantum_entanglements WHERE source_neuron_id IN (SELECT id FROM quantum_neurons WHERE parameters->>'demo' = 'true');"
+    )
+    op.execute(
+        "DELETE FROM quantum_processes WHERE neuron_id IN (SELECT id FROM quantum_neurons WHERE parameters->>'demo' = 'true');"
+    )
     op.execute("DELETE FROM quantum_neurons WHERE parameters->>'demo' = 'true';")
-    op.execute("DELETE FROM user_sessions WHERE user_id IN (SELECT id FROM users WHERE email LIKE '%@neuralblitz.ai');")
-    op.execute("DELETE FROM audit_logs WHERE user_id IN (SELECT id FROM users WHERE email LIKE '%@neuralblitz.ai');")
-    op.execute("DELETE FROM users WHERE email IN ('admin@neuralblitz.ai', 'demo@neuralblitz.ai', 'partner@neuralblitz.ai');")
+    op.execute(
+        "DELETE FROM user_sessions WHERE user_id IN (SELECT id FROM users WHERE email LIKE '%@neuralblitz.ai');"
+    )
+    op.execute(
+        "DELETE FROM audit_logs WHERE user_id IN (SELECT id FROM users WHERE email LIKE '%@neuralblitz.ai');"
+    )
+    op.execute(
+        "DELETE FROM users WHERE email IN ('admin@neuralblitz.ai', 'demo@neuralblitz.ai', 'partner@neuralblitz.ai');"
+    )
