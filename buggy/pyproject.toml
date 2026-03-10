@@ -52,7 +52,7 @@ langchain = { version = "^2.5.0", optional = true }
 langchain-anthropic = { version = "^0.1.0", optional = true }
 langchain-openai = { version = "^0.0.5", optional = true }
 langchain-community = { version = "^0.3.37", optional = true }
-langgraph = { version = "^0.0.20", optional = true }
+langgraph = { version = "^1.0.10", optional = true }
 
 # Web/API (integration-bridge)
 fastapi = { version = "^0.104.0", optional = true }
