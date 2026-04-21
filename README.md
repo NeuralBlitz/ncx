@@ -1,4 +1,5 @@
-# 🧠 NB-Ecosystem: NeuralBlitz Production Implementation
+# 🧠 NCX
+## NeuralBlitz Production Implementation
 
 > **From theoretical research framework to enterprise-ready AI platform**
 
