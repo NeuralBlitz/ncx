@@ -50,7 +50,7 @@ flax = { version = "^0.7.0", optional = true }
 # LangChain ecosystem (lrs-agents)
 langchain = { version = "^2.5.0", optional = true }
 langchain-anthropic = { version = "^0.1.0", optional = true }
-langchain-openai = { version = "^0.0.5", optional = true }
+langchain-openai = { version = "^1.1.14", optional = true }
 langchain-community = { version = "^0.3.37", optional = true }
 langgraph = { version = "^1.0.10", optional = true }
 
